@@ -1,8 +1,20 @@
 import logo from './logo.svg';
 import './App.css';
+const axios = require('axios');
+
+export const ax = axios.create({
+    baseURL: 'http://localhost:8000',
+    withCredentials: false,
+});
 
 function App() {
-
+    ax.get('/encomenda')
+        .then(r => {
+            console.log(r);
+        })
+        .catch(e => {
+            console.log(e);
+        })
 
     return ( <
         div className = "App" >
