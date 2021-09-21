@@ -1,5 +1,6 @@
 import React from 'react';
 import ax from '../App';
+import '../styles/Footer.css'
 
 /*ax.get('/encomenda')
             .then(r => {

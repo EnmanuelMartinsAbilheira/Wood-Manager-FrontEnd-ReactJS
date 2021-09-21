@@ -1,5 +1,6 @@
 import React from 'react';
 import ax from '../App';
+import '../styles/Navbar.css'
 
 /*ax.get('/encomenda')
             .then(r => {
@@ -20,7 +21,13 @@ export default class Navbar extends React.Component {
 
         return ( 
             <div className = "Navbar" >
-                Navbar
+                <div className = "leftSide">
+                    Gestor de Lenha
+                </div>
+
+                <div className = "rightSide">
+                    Opcoes
+                </div>
             </div>
 
         );
