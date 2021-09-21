@@ -5,6 +5,8 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Index from './pages/Index';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import NotFound from './pages/404';
+
 const axios = require('axios');
 
 export const ax = axios.create({
@@ -32,13 +34,14 @@ export default class App extends React.Component {
             <div className = "App" > 
                 <Router> 
                     <Navbar />
-                    <switch>
-                        <Route path="/">
+                    <Switch>
+                        <Route exact path="/">
                             <Index></Index>
                         </Route>
 
+                        <Route component={NotFound} />
                         
-                    </switch>
+                    </Switch>
                     <Footer />
                 </Router>
             </div>

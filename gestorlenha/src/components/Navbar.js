@@ -1,6 +1,8 @@
 import React from 'react';
 import ax from '../App';
 import '../styles/Navbar.css'
+import {Link} from 'react-router-dom'
+
 
 /*ax.get('/encomenda')
             .then(r => {
@@ -14,7 +16,10 @@ import '../styles/Navbar.css'
 export default class Navbar extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = { 
+            username: '', 
+            type: ''
+        };
     }
 
     render() {
@@ -26,7 +31,7 @@ export default class Navbar extends React.Component {
                 </div>
 
                 <div className = "rightSide">
-                    Opcoes
+                    <div>{ this.state.type === '' && <Link to='/login'>Login</Link>}</div>
                 </div>
             </div>
 
