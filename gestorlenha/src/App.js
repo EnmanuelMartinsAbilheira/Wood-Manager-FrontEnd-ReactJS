@@ -25,11 +25,31 @@ export const ax = axios.create({
 export default class App extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { };
+        this.state = { token: '', username: ''};
     }
 
     render() {
         
+        ax.post('/login/', {
+            username: 'admin',
+            password : 'admin'
+        }
+        )
+        .then(r => {
+            
+            console.log("Token =" + r.data.token)
+            ax.get('/api/current_user/',
+            {
+                headers:{
+                    'Authorization': 'JWT ' + r.data.token
+                }
+            })
+            .then(res => {
+                console.log(res)
+            })
+            console.log(r.data.token)
+        })
+
         return ( 
             <div className = "App" > 
                 <Router> 
