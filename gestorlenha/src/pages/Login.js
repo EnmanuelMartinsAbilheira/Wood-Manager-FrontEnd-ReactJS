@@ -20,14 +20,14 @@ export default class Login extends React.Component {
             password : this.state.password
         })
         .then(r => {
-            console.log("Login = " + r);
+            
             ax.get('/api/current_user/',{headers:{'Authorization': 'JWT ' + r.data.token}})
             .then(u => {
-                console.log('Current User = ' + u);
+
                 this.props.update_login({
-                    username: u.username,
-                    email: u.email,
-                    groups: u.groups
+                    username: u.data.username,
+                    email: u.data.email,
+                    groups: u.data.groups
                 })
                 this.setState({redirect: true});
             })

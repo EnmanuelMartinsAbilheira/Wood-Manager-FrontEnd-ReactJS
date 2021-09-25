@@ -7,7 +7,7 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Login from './pages/Login';
 import NotFound from './pages/404';
-
+import CriarPedido from './pages/CriarPedido';
 
 
 const axios = require('axios');
@@ -26,15 +26,16 @@ export default class App extends React.Component {
     }
 
     update_login(login){
-        this.state.login = login;
+        this.setState({login});
     }
 
+    
     render() {
         
         return ( 
             <div className = "App" > 
                 <Router> 
-                    <Navbar />
+                    <Navbar login={this.state.login} update_login={this.update_login.bind(this)}/>
                     <Switch>
                         <Route exact path="/">
                             <Index></Index>
@@ -42,6 +43,10 @@ export default class App extends React.Component {
 
                         <Route exact path="/login">
                             <Login update_login={this.update_login.bind(this)}/>
+                        </Route>
+                        
+                        <Route exact path="/criarpedido">
+                            <CriarPedido login={this.state.login}/>
                         </Route>
 
                         <Route component={NotFound} />

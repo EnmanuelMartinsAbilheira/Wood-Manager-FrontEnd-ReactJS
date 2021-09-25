@@ -17,14 +17,19 @@ export default class Navbar extends React.Component {
     constructor(props) {
         super(props);
         this.state = { 
-            username: '', 
-            type: '',
-            token: ''
+            login: {}
         };
     }
 
-    render() {
+    componentWillReceiveProps(props){
+        this.setState({login: props.login});
+    }
 
+    logout(){
+        this.props.update_login({});
+    }
+
+    render() {
         return ( 
             <div className = "Navbar" >
                 <div className = "leftSide">
@@ -32,7 +37,12 @@ export default class Navbar extends React.Component {
                 </div>
 
                 <div className = "rightSide">
-                    <div>{ this.state.type === '' && <Link to='/login'>Login</Link>}</div>
+
+                    <div>{ "username" in this.state.login && <Link to='/criarpedido'>Criar Pedido</Link>}</div>
+                    <div>{ !("username" in this.state.login) && <Link to='/login'>Login</Link>}</div>
+                    <div>{ "username" in this.state.login && <Link to='#' onClick={ this.logout.bind(this) }>Logout</Link>}</div>
+
+                    <div>{ this.state.login.username !== undefined && <p>Ola {this.state.login.username}</p> }</div>
                 </div>
             </div>
 
