@@ -5,7 +5,10 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Index from './pages/Index';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import Login from './pages/Login';
 import NotFound from './pages/404';
+
+
 
 const axios = require('axios');
 
@@ -13,43 +16,21 @@ export const ax = axios.create({
     baseURL: 'http://localhost:8000',
     withCredentials: false,
 });
-/*ax.get('/encomenda')
-            .then(r => {
-                console.log(r);
-            })
-            .catch(e => {
-                console.log(e);
-            })
-            */
+
+
 
 export default class App extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { token: '', username: ''};
+        this.state = { login: {}};
+    }
+
+    update_login(login){
+        this.state.login = login;
     }
 
     render() {
         
-        ax.post('/login/', {
-            username: 'admin',
-            password : 'admin'
-        }
-        )
-        .then(r => {
-            
-            console.log("Token =" + r.data.token)
-            ax.get('/api/current_user/',
-            {
-                headers:{
-                    'Authorization': 'JWT ' + r.data.token
-                }
-            })
-            .then(res => {
-                console.log(res)
-            })
-            console.log(r.data.token)
-        })
-
         return ( 
             <div className = "App" > 
                 <Router> 
@@ -57,6 +38,10 @@ export default class App extends React.Component {
                     <Switch>
                         <Route exact path="/">
                             <Index></Index>
+                        </Route>
+
+                        <Route exact path="/login">
+                            <Login update_login={this.update_login.bind(this)}/>
                         </Route>
 
                         <Route component={NotFound} />

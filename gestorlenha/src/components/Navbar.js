@@ -18,7 +18,8 @@ export default class Navbar extends React.Component {
         super(props);
         this.state = { 
             username: '', 
-            type: ''
+            type: '',
+            token: ''
         };
     }
 
