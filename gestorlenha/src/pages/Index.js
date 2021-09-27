@@ -1,5 +1,5 @@
 import React from 'react';
-import ax from '../App';
+import {ax} from '../App';
 
 /*ax.get('/encomenda')
             .then(r => {

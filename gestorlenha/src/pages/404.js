@@ -1,14 +1,5 @@
 import React from 'react';
-import ax from '../App';
-
-/*ax.get('/encomenda')
-            .then(r => {
-                console.log(r);
-            })
-            .catch(e => {
-                console.log(e);
-            })
-            */
+import {ax} from '../App';
 
 export default class NotFound extends React.Component {
     constructor(props) {

@@ -27,7 +27,8 @@ export default class Login extends React.Component {
                 this.props.update_login({
                     username: u.data.username,
                     email: u.data.email,
-                    groups: u.data.groups
+                    groups: u.data.groups,
+                    headers: {'Authorization': 'JWT ' + r.data.token}
                 })
                 this.setState({redirect: true});
             })
