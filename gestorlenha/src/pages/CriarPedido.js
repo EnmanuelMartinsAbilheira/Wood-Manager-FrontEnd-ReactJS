@@ -1,5 +1,6 @@
 import React from 'react';
 import {ax} from '../App';
+import {Redirect} from "react-router-dom";
 
 export default class CriarPedido extends React.Component {
     constructor(props) {
@@ -9,7 +10,8 @@ export default class CriarPedido extends React.Component {
             'quantidade' : '0',
             'morada' : '',
             'preco_tonelada': '',
-            'preco' : '0'
+            'preco' : '0',
+            'redirect' : false
         };
         this.update_preco_tonelada();
     }
@@ -32,16 +34,29 @@ export default class CriarPedido extends React.Component {
     updateInputValue(evt, field){
         this.setState( {[field]: evt.target.value} ) ;
 
-        if(field == 'quantidade'){
+        if(field === 'quantidade'){
             this.setState( {preco : (parseFloat(evt.target.value) * parseFloat(this.state.preco_tonelada)) } )
         }
     }
 
     criarPedido(event){
         event.preventDefault();
-        console.log(this.state.data_entrega);
-        console.log(this.state.quantidade);
-        console.log(this.state.morada_entrega);
+        
+        ax.post('/api/encomenda/', {
+                headers: this.props.login.headers,
+                data_entrega: this.state.data_entrega,
+                quantidade: this.state.quantidade,
+                cliente: this.props.login.url,
+                preco: this.state.preco,
+                morada_entrega: this.state.morada_entrega,
+                estado: "new"
+            })
+        .then(r => {
+            this.setState({redirect:true});
+        })
+        .catch(e => {
+            console.log("Error criarPedido: " + e);
+        })
     }
 
     render() {
@@ -51,7 +66,7 @@ export default class CriarPedido extends React.Component {
                 <form>
                         <label>
                             <p>Data Entrega</p>
-                            <input type="date" value={this.state.data_entrega} onChange={evt => this.updateInputValue(evt,'data_entrega')} />
+                            <input type="date" value={this.state.data_entrega} placeholder="yyyy-mm-dd" onChange={evt => this.updateInputValue(evt,'data_entrega')} />
                         </label>
                         <label>
                             <p>Quantidade</p>
@@ -73,6 +88,11 @@ export default class CriarPedido extends React.Component {
                             <button type="submit" onClick={this.criarPedido.bind(this)}>Submit</button>
                         </div>
                 </form>
+
+                <div>
+                    { this.state.redirect === true && <Redirect to='/'></Redirect>}
+                </div>
+
             </div>
 
         );

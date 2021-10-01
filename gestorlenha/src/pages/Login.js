@@ -28,7 +28,12 @@ export default class Login extends React.Component {
                     username: u.data.username,
                     email: u.data.email,
                     groups: u.data.groups,
-                    headers: {'Authorization': 'JWT ' + r.data.token}
+                    url: u.data.url,
+                    headers: {
+                        "Content-Type": 'application/json',
+                        Accept : 'application/json',
+                        'Authorization': 'JWT ' + r.data.token
+                        }
                 })
                 this.setState({redirect: true});
             })
