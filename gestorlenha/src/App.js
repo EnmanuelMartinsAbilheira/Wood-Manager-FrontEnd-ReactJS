@@ -8,7 +8,7 @@ import Footer from './components/Footer';
 import Login from './pages/Login';
 import NotFound from './pages/404';
 import CriarPedido from './pages/CriarPedido';
-
+import VerPedidos from './pages/VerPedidos';
 
 const axios = require('axios');
 
@@ -47,6 +47,10 @@ export default class App extends React.Component {
                         
                         <Route exact path="/criarpedido">
                             <CriarPedido login={this.state.login}/>
+                        </Route>
+
+                        <Route exact path="/verpedidos">
+                            <VerPedidos login={this.state.login}/>
                         </Route>
 
                         <Route component={NotFound} />

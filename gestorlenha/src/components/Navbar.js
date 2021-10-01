@@ -1,17 +1,8 @@
 import React from 'react';
-import ax from '../App';
+import {ax} from '../App';
 import '../styles/Navbar.css'
 import {Link} from 'react-router-dom'
 
-
-/*ax.get('/encomenda')
-            .then(r => {
-                console.log(r);
-            })
-            .catch(e => {
-                console.log(e);
-            })
-            */
 
 export default class Navbar extends React.Component {
     constructor(props) {
@@ -39,6 +30,7 @@ export default class Navbar extends React.Component {
                 <div className = "rightSide">
 
                     <div>{ "username" in this.state.login && <Link to='/criarpedido'>Criar Pedido</Link>}</div>
+                    <div>{ "username" in this.state.login && <Link to='/verpedidos'>Ver Pedidos</Link>}</div>
                     <div>{ !("username" in this.state.login) && <Link to='/login'>Login</Link>}</div>
                     <div>{ "username" in this.state.login && <Link to='#' onClick={ this.logout.bind(this) }>Logout</Link>}</div>
 

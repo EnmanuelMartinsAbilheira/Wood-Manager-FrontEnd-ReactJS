@@ -60,7 +60,7 @@ export default class CriarPedido extends React.Component {
     }
 
     render() {
-        console.log(this.state.preco_tonelada);
+        
         return ( 
             <div className = "CriarPedido" >
                 <form>
