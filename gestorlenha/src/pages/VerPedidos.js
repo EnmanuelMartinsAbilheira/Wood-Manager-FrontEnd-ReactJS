@@ -13,9 +13,10 @@ export default class VerPedidos extends React.Component {
     }
 
     getPedidos(){
-        ax.get('/api/encomenda/', {headers: this.props.login.headers})
+        ax.get(
+            '/api/encomendas/?cliente=' + this.props.login.pk, 
+            {headers: this.props.login.headers})
         .then(r => {
-
             this.setState({encomendas : (r.data)});
         })
         .catch(e => {
@@ -28,8 +29,6 @@ export default class VerPedidos extends React.Component {
 
     VerPedidos(event){
         event.preventDefault();
-        
-        
     }
 
     render() {

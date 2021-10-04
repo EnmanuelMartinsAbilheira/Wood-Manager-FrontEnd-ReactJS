@@ -29,6 +29,7 @@ export default class Login extends React.Component {
                     email: u.data.email,
                     groups: u.data.groups,
                     url: u.data.url,
+                    pk: u.data.pk,
                     headers: {
                         "Content-Type": 'application/json',
                         Accept : 'application/json',

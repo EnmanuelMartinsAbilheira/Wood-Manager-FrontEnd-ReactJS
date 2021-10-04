@@ -42,7 +42,7 @@ export default class CriarPedido extends React.Component {
     criarPedido(event){
         event.preventDefault();
         
-        ax.post('/api/encomenda/', {
+        ax.post('/api/encomendas/', {
                 headers: this.props.login.headers,
                 data_entrega: this.state.data_entrega,
                 quantidade: this.state.quantidade,
