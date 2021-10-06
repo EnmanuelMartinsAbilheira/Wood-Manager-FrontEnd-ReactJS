@@ -1,8 +1,9 @@
 import React from 'react';
 import {ax} from '../App';
 import {Redirect} from "react-router-dom";
+import { confirmAlert } from 'react-confirm-alert';
 
-export default class VerPedidos extends React.Component {
+export default class VerPedidos extends React.Component  {
     constructor(props) {
         super(props);
         this.state = {
@@ -31,6 +32,28 @@ export default class VerPedidos extends React.Component {
         event.preventDefault();
     }
 
+    btn_delete(pk){
+        console.log('btn delete');
+        this.state.pk = pk;
+
+        confirmAlert({
+            title: 'Delete Encomenda',
+            message: 'Are you sure to do Delete?',
+            buttons: [
+              {
+                label: 'Yes',
+                onClick: () => {
+                    console.log("Delete " + this.state.pk);
+                }
+              },
+              {
+                label: 'No',
+                onClick: () => {
+                }
+              }
+            ]
+          });
+    }
     render() {
         console.log(this.state.encomendas);
         return ( 
@@ -43,6 +66,7 @@ export default class VerPedidos extends React.Component {
                             <th>Morada Entrega</th>
                             <th>Preco</th>
                             <th>Quantidade</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -54,6 +78,9 @@ export default class VerPedidos extends React.Component {
                                 <td>{enc.morada_entrega}</td>
                                 <td>{enc.preco}</td>
                                 <td>{enc.quantidade}</td>
+                                <td>
+                                    { "new" === enc.estado && <button onClick={this.btn_delete.bind(this,enc.pk)}>Delete</button>}
+                                </td>
                             </tr>
                         ) 
                     })}
