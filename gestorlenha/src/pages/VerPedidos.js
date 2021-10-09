@@ -44,7 +44,18 @@ export default class VerPedidos extends React.Component  {
               {
                 label: 'Yes',
                 onClick: () => {
-                    console.log("Delete " + this.state.pk);
+                    ax.put('/api/encomendas/' + this.state.pk + '/', 
+                    {
+                        headers: this.props.login.headers,
+                        pk: this.state.pk,
+                        estado: "deleted"
+                    })
+                    .then(r => {
+                        this.setState({redirect:true});
+                    })
+                    .catch(e => {
+                        console.log("Error confirm pedido: " + e);
+                    })
                 }
               },
               {
