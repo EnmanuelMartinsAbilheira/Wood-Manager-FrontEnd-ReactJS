@@ -2,6 +2,7 @@ import React from 'react';
 import {ax} from '../App';
 import {Redirect} from "react-router-dom";
 import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
 
 export default class VerPedidos extends React.Component  {
     constructor(props) {
