@@ -11,12 +11,17 @@ export default class VerPedidos extends React.Component  {
             'redirect' : false,
             'encomendas': []
         };
-        this.getPedidos();
+
+        if("groups" in this.props.login && this.props.login.groups.includes('admin') === true){
+            this.getPedidos('');
+        }else{
+            this.getPedidos('?cliente=' + this.props.login.pk + "&is_deleted=False");
+        }
     }
 
-    getPedidos(){
+    getPedidos(filter){
         ax.get(
-            '/api/encomendas/?cliente=' + this.props.login.pk + "&is_deleted=False", 
+            '/api/encomendas/' + filter, 
             {headers: this.props.login.headers})
         .then(r => {
             this.setState({encomendas : (r.data)});
@@ -33,13 +38,13 @@ export default class VerPedidos extends React.Component  {
         event.preventDefault();
     }
 
-    btn_delete(pk){
+    btn_set_is_deleted(pk, estado){
         console.log('btn delete');
         this.state.pk = pk;
 
         confirmAlert({
-            title: 'Delete Encomenda',
-            message: 'Are you sure to do Delete?',
+            title:  estado === "True" ? 'Delete Encomenda' : 'Restore Encomenda',
+            message: estado === "True" ? 'Are you sure to do Delete?' : 'Are you sure you want to restore?',
             buttons: [
               {
                 label: 'Yes',
@@ -48,7 +53,7 @@ export default class VerPedidos extends React.Component  {
                     {
                         headers: this.props.login.headers,
                         pk: this.state.pk,
-                        is_deleted: "True"
+                        is_deleted: estado
                     })
                     .then(r => {
                         this.setState({redirect:true});
@@ -80,7 +85,8 @@ export default class VerPedidos extends React.Component  {
                             <th>Morada Entrega</th>
                             <th>Preco</th>
                             <th>Quantidade</th>
-                            <th>Actions</th>
+                            <th>Cancelado?</th>
+                            <th>Ações</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -88,14 +94,16 @@ export default class VerPedidos extends React.Component  {
                     {this.state.encomendas.map((enc, i) => {        
                         return (
                             <tr>
-                                {"groups" in this.props.login && this.props.login.groups.includes('admin') === true && <th>{enc.username}</th> }
+                                {"groups" in this.props.login && this.props.login.groups.includes('admin') === true && <td>{enc.username}</td> }
                                 <td>{enc.estado}</td>
                                 <td>{enc.data_entrega}</td>
                                 <td>{enc.morada_entrega}</td>
                                 <td>{enc.preco}</td>
                                 <td>{enc.quantidade}</td>
+                                {enc.is_deleted === true ? <td> Sim </td> : <td> Nao </td>}
                                 <td>
-                                    <button onClick={this.btn_delete.bind(this,enc.pk)}>Cancel</button>
+                                    
+                                    {enc.is_deleted === false ? <button onClick={this.btn_set_is_deleted.bind(this,enc.pk,"True")}>Cancelar</button> : <td> <button onClick={this.btn_set_is_deleted.bind(this,enc.pk,"False")}>Restaurar</button> </td>}
                                 </td>
                             </tr>
                         ) 
