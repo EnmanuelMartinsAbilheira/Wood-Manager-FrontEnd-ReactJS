@@ -67,12 +67,14 @@ export default class VerPedidos extends React.Component  {
           });
     }
     render() {
-
+        console.log("groups = " + JSON.stringify(this.props.login.groups));
+        //console.log("groups check = " + 'http://localhost:8000/api/groups/1/' in this.props.login.groups);
         return ( 
             <div className = "VerPedidos" >
                 <table align="center">
                     <thead>
                         <tr>
+                            {"groups" in this.props.login && this.props.login.groups.includes('admin') === true && <th>User</th> }
                             <th>Estado</th>
                             <th>Data</th>
                             <th>Morada Entrega</th>
@@ -86,6 +88,7 @@ export default class VerPedidos extends React.Component  {
                     {this.state.encomendas.map((enc, i) => {        
                         return (
                             <tr>
+                                {"groups" in this.props.login && this.props.login.groups.includes('admin') === true && <th>{enc.username}</th> }
                                 <td>{enc.estado}</td>
                                 <td>{enc.data_entrega}</td>
                                 <td>{enc.morada_entrega}</td>

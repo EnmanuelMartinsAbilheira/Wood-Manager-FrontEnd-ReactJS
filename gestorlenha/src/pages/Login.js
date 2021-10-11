@@ -21,22 +21,43 @@ export default class Login extends React.Component {
         })
         .then(r => {
             
+
             ax.get('/api/current_user/',{headers:{'Authorization': 'JWT ' + r.data.token}})
             .then(u => {
+                let headers = {
+                    "Content-Type": 'application/json',
+                    Accept : 'application/json',
+                    'Authorization': 'JWT ' + r.data.token
+                    };
+                    
+                    ax.get('/api/groups/',{headers: headers})
+                        .then(allGroups => {
+                            let ret = [];
 
-                this.props.update_login({
-                    username: u.data.username,
-                    email: u.data.email,
-                    groups: u.data.groups,
-                    url: u.data.url,
-                    pk: u.data.pk,
-                    headers: {
-                        "Content-Type": 'application/json',
-                        Accept : 'application/json',
-                        'Authorization': 'JWT ' + r.data.token
+                            [u.data.groups].flat().forEach((group_url) => {
+                                allGroups.data.forEach((g_find) => {
+                                    
+                                    if(g_find.url === group_url){
+                                        ret.push(g_find.name);
+                                    }
+
+                                })
+                            });
+                            
+                            this.props.update_login({
+                                username: u.data.username,
+                                email: u.data.email,
+                                url: u.data.url,
+                                groups: ret,
+                                pk: u.data.pk,
+                                headers: headers
+                            });
+
+                            this.setState({redirect: true});
+                            
                         }
-                })
-                this.setState({redirect: true});
+                        )
+                
             })
         })
     }
