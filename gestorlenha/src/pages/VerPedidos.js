@@ -16,7 +16,7 @@ export default class VerPedidos extends React.Component  {
 
     getPedidos(){
         ax.get(
-            '/api/encomendas/?cliente=' + this.props.login.pk, 
+            '/api/encomendas/?cliente=' + this.props.login.pk + "&is_deleted=False", 
             {headers: this.props.login.headers})
         .then(r => {
             this.setState({encomendas : (r.data)});
@@ -48,7 +48,7 @@ export default class VerPedidos extends React.Component  {
                     {
                         headers: this.props.login.headers,
                         pk: this.state.pk,
-                        estado: "deleted"
+                        is_deleted: "True"
                     })
                     .then(r => {
                         this.setState({redirect:true});
@@ -67,7 +67,7 @@ export default class VerPedidos extends React.Component  {
           });
     }
     render() {
-        console.log(this.state.encomendas);
+
         return ( 
             <div className = "VerPedidos" >
                 <table align="center">
@@ -78,6 +78,7 @@ export default class VerPedidos extends React.Component  {
                             <th>Morada Entrega</th>
                             <th>Preco</th>
                             <th>Quantidade</th>
+                            <th>Actions</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -91,7 +92,7 @@ export default class VerPedidos extends React.Component  {
                                 <td>{enc.preco}</td>
                                 <td>{enc.quantidade}</td>
                                 <td>
-                                    { "new" === enc.estado && <button onClick={this.btn_delete.bind(this,enc.pk)}>Delete</button>}
+                                    <button onClick={this.btn_delete.bind(this,enc.pk)}>Cancel</button>
                                 </td>
                             </tr>
                         ) 
