@@ -15,8 +15,32 @@ export default class CriarUtilizador extends React.Component {
         };
     }
 
+    fast_error(msg){
+        confirmAlert({
+            title:  'Erro',
+            message: msg,
+            buttons: [
+              {
+                label: 'Ok',
+                onClick: () => {
+                }
+              }
+            ]
+          });
+    }
+
     CriarUtilizador(event){
         event.preventDefault();
+
+        if(this.state.password !== this.state.password2){
+            this.fast_error("Passwords diferentes");
+            return;
+        }
+        
+        if(this.state.password.length < 5){
+            this.fast_error("Password tem que ter um minimo de 5 caracteres");
+            return;
+        }
 
         ax.post('/api/users/', {
             username: this.state.username,
@@ -26,17 +50,7 @@ export default class CriarUtilizador extends React.Component {
             this.setState({redirect: true});
         })
         .catch(err => {
-            confirmAlert({
-                title:  'Erro',
-                message: JSON.stringify(err.response.data) ,
-                buttons: [
-                  {
-                    label: 'Ok',
-                    onClick: () => {
-                    }
-                  }
-                ]
-              });
+            this.fast_error(JSON.stringify(err.response.data));
         })
     }
 
