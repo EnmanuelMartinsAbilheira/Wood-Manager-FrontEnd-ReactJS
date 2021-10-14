@@ -9,6 +9,7 @@ import Login from './pages/Login';
 import NotFound from './pages/404';
 import CriarPedido from './pages/CriarPedido';
 import VerPedidos from './pages/VerPedidos';
+import CriarUtilizador from './pages/CriarUtilizador';
 
 const axios = require('axios');
 
@@ -43,6 +44,10 @@ export default class App extends React.Component {
 
                         <Route exact path="/login">
                             <Login update_login={this.update_login.bind(this)}/>
+                        </Route>
+
+                        <Route exact path="/criarutilizador">
+                            <CriarUtilizador />
                         </Route>
                         
                         <Route exact path="/criarpedido">

@@ -31,6 +31,7 @@ export default class Navbar extends React.Component {
 
                     <div>{ "username" in this.state.login && <Link to='/criarpedido'>Criar Pedido</Link>}</div>
                     <div>{ "username" in this.state.login && <Link to='/verpedidos'>Ver Pedidos</Link>}</div>
+                    <div>{ !("username" in this.state.login) && <Link to='/criarutilizador'>Criar Utilizador</Link>}</div>
                     <div>{ !("username" in this.state.login) && <Link to='/login'>Login</Link>}</div>
                     <div>{ "username" in this.state.login && <Link to='#' onClick={ this.logout.bind(this) }>Logout</Link>}</div>
 
